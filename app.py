@@ -5,9 +5,11 @@ from streamlit.components.v1 import html
 import streamlit.components.v1 as components
 from pages import login, signup  # Ensure these exist in the 'pages' folder
 import search  # Import search module
-
+logo_path = "logo.png"
 # ✅ Set Page Configuration (MUST be the first Streamlit command)
-st.set_page_config(page_title="CINE.ARC", page_icon="🎬", layout="wide", initial_sidebar_state="collapsed")
+
+st.set_page_config(page_title="CINE.ARC", page_icon="https://i.imgur.com/xeaMkgw.png🎬", layout="wide", initial_sidebar_state="collapsed")
+
 
 # ✅ Initialize session state variables
 if "logged_in" not in st.session_state:
@@ -37,6 +39,22 @@ st.markdown("""
         [data-testid="stAppViewContainer"] > section {padding-top: 0px;}
         [data-testid="stSidebar"] {display: none !important;}  /* Hides Sidebar */
 
+         /* Increase Tab Font Size */
+        div[data-baseweb="tab-list"] button {
+            font-size: 3rem !important;  /* Adjust size */
+            font-weight: bold !important;
+            color: white !important;  
+            padding: 12px 20px !important;
+        }
+        
+        /* Highlight active tab */
+        div[data-baseweb="tab-list"] button[aria-selected="true"] {
+            font-size: 2.2rem !important; /* Slightly bigger */
+            color: white !important;
+            background-color: #ff6600 !important;
+            border-radius: 10px;
+            padding: 15px;
+        }
         /* Top Bar with Title and Login */
         .top-bar {
             display: flex;
@@ -45,15 +63,15 @@ st.markdown("""
             padding: 10px 20px;
         }
 
-        /* Elegant Title Styling */
         .cinearc-title { 
-    text-align: center; 
-    font-size: 50px; 
-    font-weight: bold; 
-    font-family: 'Cinzel', serif;
-    color: #ffcc00;
-    letter-spacing: 3px;
-    margin-top: -20px; /* Reduce the gap */
+            text-align: center; 
+            font-size: 50px; 
+            font-weight: bold; 
+            font-family: 'Montserrat', sans-serif;
+            color: #ffcc00;
+            letter-spacing: 3px;
+            margin-top: -50px; /* Increased negative margin to move title up */
+        }   
 }
 
         /* Login Button Styling */
@@ -124,6 +142,13 @@ with col2:
             st.rerun()  # Redirects to the login page
 
 
+# 🔹 Title & Login Button (Now moved higher)
+st.markdown("""
+<div style="display: flex; justify-content: space-between; align-items: center; padding: 5px 20px; margin-top: -30px;">
+    <div class="cinearc-title"> </div>
+    <div class="cinearc-title"> </div>
+</div>
+""", unsafe_allow_html=True)
 # 🔹 Main Tabs
 tab1, tab2, tab3 = st.tabs(["Home", "Search", "Add Movies"])
 
@@ -131,11 +156,28 @@ tab1, tab2, tab3 = st.tabs(["Home", "Search", "Add Movies"])
 with tab1:
     def display_carousel():
         carousel_html = """
+        <style>
+        .carousel-item img {
+        border-radius: 30px; /* Curved edges */
+        object-fit: cover;  /* Ensures full coverage */
+        width: 100vw;
+        height: 100vh;
+        background-color: #0e1117; /* Extra white space turns black */
+    }
+    .carousel-inner {
+        background-color: #0e1117; /* Black background behind images */
+    }
+    .carousel {
+        background-color: #0e1117; /* Ensures entire area is black */
+    }
+    </style>
         <div id="fullpage-carousel" class="carousel slide" data-bs-ride="carousel" style="width: 100vw; height: 100vh; overflow: hidden;">
           <div class="carousel-inner">
             <div class="carousel-item active">
               <a href="https://www.imdb.com/title/tt0120338/" target="_blank">
+                
                 <img src="https://www.themoviedb.org/t/p/original/vIAm7UDNjGztvUYtDuS0in1VAXg.jpg" class="d-block w-100" style="object-fit: cover; width: 100vw; height: 100vh;" alt="Titanic">
+
               </a>
             </div>
             <div class="carousel-item">
