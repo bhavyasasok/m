@@ -44,7 +44,7 @@ def fetch_movies(query="", genre_id=None, release_year=None):
 
 # ✅ Search Page Function
 def search_page():
-    st.markdown("<h1 style='text-align: center; font-family: Cinzel, serif; color: #ffcc00;'></h1>", unsafe_allow_html=True)
+    st.markdown("<h1 style='text-align: center; font-family: Cinzel, serif; color: #ffcc00;'>Movie Search</h1>", unsafe_allow_html=True)
 
     # ✅ Fetch Genres & Years
     genres = fetch_tmdb_genres()
@@ -64,7 +64,7 @@ def search_page():
         selected_year = st.selectbox(" Filter by Year", ["All"] + years)
         release_year = selected_year if selected_year != "All" else None
 
-    # ✅ Fetch Movies Based on Filters📅🎭🎥🔍🔥⚠️
+    # ✅ Fetch Movies Based on Filters
     with st.spinner(' Searching for movies...'):
         movies = fetch_movies(query=selected_movie, genre_id=genre_id, release_year=release_year)
 
@@ -76,9 +76,10 @@ def search_page():
             with cols[i % 4]:
                 title = movie.get("title", "Unknown Title")
                 poster = f"https://image.tmdb.org/t/p/w500{movie.get('poster_path', '')}" if movie.get('poster_path') else "https://via.placeholder.com/250x375"
+                movie_url = f"https://www.themoviedb.org/movie/{movie['id']}"
 
-                st.markdown(f"**{title}**")  # Display title as plain text
-                st.image(poster, use_container_width=True)  # Fixed deprecation warning
+                # Make poster clickable by wrapping it inside a hyperlink
+                st.markdown(f"[![{title}]({poster})]({movie_url})", unsafe_allow_html=True)
                 st.caption(f"📅 {movie.get('release_date', 'Unknown')[:4]} | 🎭 {selected_genre if selected_genre != 'All' else 'Multiple Genres'}")
     else:
         st.warning("⚠️ No movies found.")
