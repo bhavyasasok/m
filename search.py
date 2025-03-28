@@ -44,7 +44,7 @@ def fetch_movies(query="", genre_id=None, release_year=None):
 
 # ✅ Search Page Function
 def search_page():
-    st.markdown("<h1 style='text-align: center; font-family: Cinzel, serif; color: #ffcc00;'>Movie Search</h1>", unsafe_allow_html=True)
+    st.markdown("<h1 style='text-align: center; font-family: Cinzel, serif; color: #ffcc00;'></h1>", unsafe_allow_html=True)
 
     # ✅ Fetch Genres & Years
     genres = fetch_tmdb_genres()
